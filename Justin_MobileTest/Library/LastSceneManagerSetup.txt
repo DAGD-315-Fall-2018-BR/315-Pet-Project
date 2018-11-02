@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/Justin Files/Scenes/SampleScene.unity
+  isLoaded: 1
+  isActive: 1
