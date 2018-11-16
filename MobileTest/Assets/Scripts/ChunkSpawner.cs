@@ -5,12 +5,13 @@ using UnityEngine;
 public class ChunkSpawner : MonoBehaviour {
 	public List<Chunk> chunks;
 	Chunk tempChunk;
+	public static int speed = 6;
 	// Use this for initialization
 	public void SpawnChunks()
 	{
 
 	}
-	
+
     public void LateUpdate()
     {
        if (chunks[0].transform.position.z < -1)

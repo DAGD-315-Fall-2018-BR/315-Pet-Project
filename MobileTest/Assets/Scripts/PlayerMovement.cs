@@ -25,6 +25,8 @@ public class PlayerMovement : MonoBehaviour {
     public float smooth = 1.5f;
     public float speed = 1f; 
     public float jump = 1300f;
+	public Vector3 vel;
+	public float gravity;
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
@@ -80,8 +82,9 @@ public class PlayerMovement : MonoBehaviour {
         if ((Input.GetKeyDown("w") || swipeControls.SwipeUp) && !inAir)
         {
 
-            rb.AddForce(new Vector3(0, jump, 0));
-            inAir = true;
+			//rb.AddForce(new Vector3(0, jump, 0));
+			vel.y = jump;
+			inAir = true;
 			anim.SetBool("Jumping", true);
         }
 
@@ -107,10 +110,10 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void FixedUpdate () {
-
-        if (isMoving)
+		if (isMoving)
         {
-            rb.velocity = new Vector3(target * speed, rb.velocity.y, 0);
+			//rb.velocity = new Vector3(target * speed, rb.velocity.y, 0);
+			vel = new Vector3(target * speed, vel.y, 0);
             if (((transform.position.x > -laneDis - laneThreshold && transform.position.x < -laneDis +laneThreshold) && lane == 1))
             {
                 isMoving = false;
@@ -127,6 +130,9 @@ public class PlayerMovement : MonoBehaviour {
 			{
 				isMoving = false;
 			}
+			//transform.position += vel * Time.fixedDeltaTime;
+
+			
             if(!isMoving)
             {
                 float xPos = 0;
@@ -136,19 +142,39 @@ public class PlayerMovement : MonoBehaviour {
                     xPos = 0;
                 else if (lane == 3)
                     xPos = laneDis;
-				rb.velocity = new Vector3(0, rb.velocity.y, 0);
+				//rb.velocity = new Vector3(0, rb.velocity.y, 0);
+				vel = new Vector3(0, vel.y, 0);
                 transform.position = new Vector3(xPos, transform.position.y, 5);   
             }
         }
-    }
+		transform.position += vel * Time.fixedDeltaTime;
+		if (transform.position.y < 0)
+		{
+			vel.y = 0;
+			transform.position = new Vector3(transform.position.x, 0, 5);
+			inAir = false;
+			anim.SetBool("Jumping", false);
+		}
+		else
+		{
+			
+			vel.y -= gravity * Time.fixedDeltaTime;
+			if(vel.y < 0)
+			{
+				vel.y -= 10* gravity * Time.fixedDeltaTime;
+			}
+		}
+	}
 
     void OnCollisionEnter(Collision c)
     {
+		/*
         if(c.transform.CompareTag("Ground"))
         {
             inAir = false;
 			anim.SetBool("Jumping", false);
 		}
+		*/
     }
    
 }

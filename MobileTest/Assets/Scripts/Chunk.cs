@@ -16,6 +16,7 @@ public class Chunk : MonoBehaviour {
 		SpawnObstacles();
 		rb = GetComponent<Rigidbody>();
 		rb.velocity = new Vector3(0, 0, 500);
+		speed = ChunkSpawner.speed;
 	}
 
 
