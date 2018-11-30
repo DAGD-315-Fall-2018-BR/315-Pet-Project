@@ -7,7 +7,8 @@ public class Obstacle : MonoBehaviour {
 	{
 		small,
 		tall,
-		airborne
+		airborne,
+		smallAir
 	}
 	public ObstacleType type;
 }

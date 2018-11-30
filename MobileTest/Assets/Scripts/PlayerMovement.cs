@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour {
     public float smooth = 1.5f;
     public float speed = 1f; 
     public float jump = 1300f;
+	public float fallMod = 5;
 	public Vector3 vel;
 	public float gravity;
 
@@ -158,7 +159,7 @@ public class PlayerMovement : MonoBehaviour {
 			vel.y -= gravity * Time.fixedDeltaTime;
 			if(vel.y < 0)
 			{
-				vel.y -= 10* gravity * Time.fixedDeltaTime;
+				vel.y -= fallMod* gravity * Time.fixedDeltaTime;
 			}
 		}
 	}
@@ -189,6 +190,7 @@ public class PlayerMovement : MonoBehaviour {
 				if (!inAir)
 				{
 					TakeDamage();
+					EventManager.TriggerEvent("speedPowerup");
 				}
 			}
 			else if (o.type == Obstacle.ObstacleType.tall)

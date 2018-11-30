@@ -8,7 +8,6 @@ public class Chunk : MonoBehaviour {
 
 	public GameObject[] obstacleList;
 
-	public float speed = 500;
 	Rigidbody rb;
 	private List<GameObject> obstacles = new List<GameObject>();
 	// Use this for initialization
@@ -16,7 +15,6 @@ public class Chunk : MonoBehaviour {
 		SpawnObstacles();
 		rb = GetComponent<Rigidbody>();
 		rb.velocity = new Vector3(0, 0, 500);
-		speed = ChunkSpawner.speed;
 	}
 
 
@@ -68,6 +66,6 @@ public class Chunk : MonoBehaviour {
 
 	private void FixedUpdate()
 	{
-		transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - speed * Time.fixedDeltaTime);
+		transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - ChunkSpawner.speed * Time.fixedDeltaTime);
 	}
 }

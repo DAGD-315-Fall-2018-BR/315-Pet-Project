@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class RunnerUI : MonoBehaviour {
 
 	public Text GameOverText;
+	public Text HealthUI;
 	public PlayerMovement player;
 
 	private UnityAction listener;
@@ -29,6 +30,11 @@ public class RunnerUI : MonoBehaviour {
 		if(player.isDead == true)
 		{
 			GameOverText.enabled = true;
+			HealthUI.enabled = false;
+		}
+		else
+		{
+			HealthUI.text = "Health: " + player.health;
 		}
 	}
 }
