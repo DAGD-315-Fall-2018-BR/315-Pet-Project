@@ -7,7 +7,8 @@ public class PlayerMovement : MonoBehaviour {
   //  public Transform trans;
     public Rigidbody rb;
     public Swipe swipeControls;
-    
+	public int health = 5;
+	public bool isDead = false;
 	private Animator anim;
     private bool doOnce = true; 
     
@@ -27,6 +28,7 @@ public class PlayerMovement : MonoBehaviour {
     public float jump = 1300f;
 	public Vector3 vel;
 	public float gravity;
+
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
@@ -103,11 +105,6 @@ public class PlayerMovement : MonoBehaviour {
 			anim.SetBool("Sliding", false);
 		}
     }
-
-	public void LateUpdate()
-	{
-
-	}
 	// Update is called once per frame
 	void FixedUpdate () {
 		if (isMoving)
@@ -166,15 +163,38 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 
-    void OnCollisionEnter(Collision c)
-    {
-		/*
-        if(c.transform.CompareTag("Ground"))
-        {
-            inAir = false;
-			anim.SetBool("Jumping", false);
+	void TakeDamage()
+	{
+		health--;
+		if(health <= 0)
+		{
+			isDead = true;
 		}
-		*/
-    }
-   
+		EventManager.TriggerEvent("playerDamage");
+	}
+	private void OnTriggerEnter(Collider c)
+	{
+		if (c.gameObject.CompareTag("Obstacle"))
+		{
+			Obstacle o = c.gameObject.GetComponent<Obstacle>();
+			if (o.type == Obstacle.ObstacleType.airborne)
+			{
+				if (!isSliding)
+				{
+					TakeDamage();
+				}
+			}
+			else if (o.type == Obstacle.ObstacleType.small)
+			{
+				if (!inAir)
+				{
+					TakeDamage();
+				}
+			}
+			else if (o.type == Obstacle.ObstacleType.tall)
+			{	
+				TakeDamage();
+			}
+		}
+	}
 }
