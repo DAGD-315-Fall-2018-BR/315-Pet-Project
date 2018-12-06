@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114544780648188408}
   - component: {fileID: 95668383086189888}
   - component: {fileID: 114683206113430580}
+  - component: {fileID: 114834715348917482}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -71,8 +72,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1493923213822014}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.182, z: 0}
+  m_LocalScale: {x: 0.60285, y: 0.60285, z: 0.60285}
   m_Children: []
   m_Father: {fileID: 4607942544661570}
   m_RootOrder: 0
@@ -84,7 +85,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1220954512758546}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalPosition: {x: 1, y: 0, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4607942544661570}
@@ -208,7 +209,7 @@ MonoBehaviour:
   health: 5
   isDead: 0
   target: 0
-  laneDis: 1.4
+  laneDis: 1
   laneThreshold: 0.15
   smooth: 2
   speed: 13
@@ -240,4 +241,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameOverText: {fileID: 0}
   HealthUI: {fileID: 0}
+  ScoreText: {fileID: 0}
   player: {fileID: 114008528223355940}
+  points: {fileID: 114834715348917482}
+--- !u!114 &114834715348917482
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1220954512758546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29dafd3bb61c3344e81d1b61ad2773cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

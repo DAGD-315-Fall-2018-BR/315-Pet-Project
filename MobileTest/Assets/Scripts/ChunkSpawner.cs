@@ -5,12 +5,15 @@ using UnityEngine.Events;
 
 public class ChunkSpawner : MonoBehaviour {
 	public List<Chunk> chunks;
+	public GameObject[] SpawnList;
+	public string[] chunkCodes;
 	Chunk tempChunk;
 	public static int speed = 6;
 	int baseSpeed = 6;
 	float timer = 0;
 	float timerBase = 5;
 	bool boosted = false;
+	public static ChunkSpawner cs = null;
 	// Use this for initialization
 
 	private UnityAction listener;
@@ -18,6 +21,16 @@ public class ChunkSpawner : MonoBehaviour {
 	private void Awake()
 	{
 		listener = new UnityAction(SpeedBoost);
+		if(cs == null)
+		{
+			cs = this;
+		}
+		else
+		{
+			Destroy(this);
+			Debug.Log("Only one chunk Spawner is allowed");
+
+		}
 	}
 	private void OnEnable()
 	{
@@ -63,6 +76,7 @@ public class ChunkSpawner : MonoBehaviour {
 			tempChunk.transform.position = chunks[chunks.Count - 1].transform.position + new Vector3(0, 0, 8.8f);
 			chunks.RemoveAt(0);
 			chunks.Add(tempChunk);
+			tempChunk.GenerateNewCode();
 			tempChunk = null;
 		} 
         

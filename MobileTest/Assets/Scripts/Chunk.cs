@@ -34,21 +34,17 @@ public class Chunk : MonoBehaviour {
 				int c = int.Parse(code[i].ToString());
 				if (float.IsNaN(c))
 					continue;
-				GameObject go = Instantiate(obstacleList[c - 1], spawnPoints[i].position, spawnPoints[i].rotation,transform);
+				GameObject go = Instantiate(ChunkSpawner.cs.SpawnList[c - 1], spawnPoints[i].position, spawnPoints[i].rotation,transform);
 				obstacles.Add(go);
 			}
 		}
 	}
 
-	string GenerateNewCode()
+	public void GenerateNewCode()
 	{
-		string tempCode = "";
-		for (int i = 0; i < 12; i++)
-		{
-			char c = Random.Range(0, 4).ToString()[0];
-			tempCode += c;
-		}
-		return tempCode;
+		int index = Random.Range(0, ChunkSpawner.cs.chunkCodes.Length);
+		SetCode(ChunkSpawner.cs.chunkCodes[index]);
+		SpawnObstacles();
 	}
 
 	void SetCode(string c)

@@ -26,10 +26,10 @@ public class Points : MonoBehaviour {
 	{
 		EventManager.StopListening("pointMultPowerup", listener);
 	}
-
-
-
-
+	public int GetScore()
+	{
+		return (int)score;
+	}
 	void PointMultPowerup()
 	{
 		Debug.Log("MORE POINTS!");

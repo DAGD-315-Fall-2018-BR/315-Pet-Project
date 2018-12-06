@@ -108,60 +108,68 @@ public class PlayerMovement : MonoBehaviour {
     }
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (isMoving)
-        {
-			//rb.velocity = new Vector3(target * speed, rb.velocity.y, 0);
-			vel = new Vector3(target * speed, vel.y, 0);
-            if (((transform.position.x > -laneDis - laneThreshold && transform.position.x < -laneDis +laneThreshold) && lane == 1))
-            {
-                isMoving = false;
-            }
-            if (((transform.position.x > laneDis - laneThreshold && transform.position.x < laneDis + laneThreshold)  && lane == 3))
-            {
-                isMoving = false;
-            }
-            if ((transform.position.x < laneThreshold && transform.position.x > -laneThreshold) && lane == 2)
-            {
-                isMoving = false;
-            }
-			if (transform.position.x > laneDis || transform.position.x < -laneDis)
+		if (!isDead)
+		{
+			if (isMoving)
 			{
-				isMoving = false;
-			}
-			//transform.position += vel * Time.fixedDeltaTime;
+				//rb.velocity = new Vector3(target * speed, rb.velocity.y, 0);
+				vel = new Vector3(target * speed, vel.y, 0);
+				if (((transform.position.x > -laneDis - laneThreshold && transform.position.x < -laneDis + laneThreshold) && lane == 1))
+				{
+					isMoving = false;
+				}
+				if (((transform.position.x > laneDis - laneThreshold && transform.position.x < laneDis + laneThreshold) && lane == 3))
+				{
+					isMoving = false;
+				}
+				if ((transform.position.x < laneThreshold && transform.position.x > -laneThreshold) && lane == 2)
+				{
+					isMoving = false;
+				}
+				if (transform.position.x > laneDis || transform.position.x < -laneDis)
+				{
+					isMoving = false;
+				}
+				//transform.position += vel * Time.fixedDeltaTime;
 
-			
-            if(!isMoving)
-            {
-                float xPos = 0;
-                if (lane == 1)
-                    xPos = -laneDis;
-                else if (lane == 2)
-                    xPos = 0;
-                else if (lane == 3)
-                    xPos = laneDis;
-				//rb.velocity = new Vector3(0, rb.velocity.y, 0);
-				vel = new Vector3(0, vel.y, 0);
-                transform.position = new Vector3(xPos, transform.position.y, 5);   
-            }
-        }
+
+				if (!isMoving)
+				{
+					float xPos = 0;
+					if (lane == 1)
+						xPos = -laneDis;
+					else if (lane == 2)
+						xPos = 0;
+					else if (lane == 3)
+						xPos = laneDis;
+					//rb.velocity = new Vector3(0, rb.velocity.y, 0);
+					vel = new Vector3(0, vel.y, 0);
+					transform.position = new Vector3(xPos, transform.position.y, 5);
+				}
+			}
+		}
+		else
+		{
+			if (transform.position.z > 0)
+				vel.z = -ChunkSpawner.speed;
+		}
 		transform.position += vel * Time.fixedDeltaTime;
 		if (transform.position.y < 0)
 		{
 			vel.y = 0;
-			transform.position = new Vector3(transform.position.x, 0, 5);
+			transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 			inAir = false;
 			anim.SetBool("Jumping", false);
 		}
 		else
 		{
-			
 			vel.y -= gravity * Time.fixedDeltaTime;
-			if(vel.y < 0)
+			if (vel.y < 0)
 			{
-				vel.y -= fallMod* gravity * Time.fixedDeltaTime;
+				vel.y -= fallMod * gravity * Time.fixedDeltaTime;
 			}
 		}
+		
 	}
 
 	void TakeDamage()
@@ -196,8 +204,15 @@ public class PlayerMovement : MonoBehaviour {
 			else if (o.type == Obstacle.ObstacleType.tall)
 			{	
 				TakeDamage();
+			}
+		}
+		if (c.gameObject.CompareTag("PowerUp"))
+		{
+			PowerUp p = c.gameObject.GetComponent<PowerUp>();
+			if(p.type == PowerUp.PowerUpType.Collar)
+			{
 				EventManager.TriggerEvent("pointMultPowerup");
-				
+				Destroy(c.gameObject);
 			}
 		}
 	}
