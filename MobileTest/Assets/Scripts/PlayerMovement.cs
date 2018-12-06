@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour {
 	public float fallMod = 5;
 	public Vector3 vel;
 	public float gravity;
+    public bool isPaused = false;
 
 	// Use this for initialization
 	void Start () {
@@ -42,8 +43,9 @@ public class PlayerMovement : MonoBehaviour {
 	void Update()
     {
         //Controls, to be replaced at a later date with drag coontrols
-
-        if ((Input.GetKeyDown("a") || swipeControls.SwipeLeft) && !isMoving && lane != 1)
+        
+        if (!isPaused){
+            if ((Input.GetKeyDown("a") || swipeControls.SwipeLeft) && !isMoving && lane != 1)
         {
 
             isMoving = true;
@@ -106,10 +108,17 @@ public class PlayerMovement : MonoBehaviour {
 			anim.SetBool("Sliding", false);
 		}
     }
+    }
+        
 	// Update is called once per frame
 	void FixedUpdate () {
+        
+        if(!isPaused){
 		if (isMoving)
         {
+            
+                
+            
 			//rb.velocity = new Vector3(target * speed, rb.velocity.y, 0);
 			vel = new Vector3(target * speed, vel.y, 0);
             if (((transform.position.x > -laneDis - laneThreshold && transform.position.x < -laneDis +laneThreshold) && lane == 1))
@@ -162,6 +171,7 @@ public class PlayerMovement : MonoBehaviour {
 				vel.y -= fallMod* gravity * Time.fixedDeltaTime;
 			}
 		}
+        }
 	}
 
 	void TakeDamage()
