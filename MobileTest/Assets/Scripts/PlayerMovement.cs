@@ -196,6 +196,8 @@ public class PlayerMovement : MonoBehaviour {
 			else if (o.type == Obstacle.ObstacleType.tall)
 			{	
 				TakeDamage();
+				EventManager.TriggerEvent("pointMultPowerup");
+				
 			}
 		}
 	}
