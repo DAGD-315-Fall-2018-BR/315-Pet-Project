@@ -8,6 +8,7 @@ public class RunnerUI : MonoBehaviour {
 	public Text GameOverText;
 	public Text HealthUI;
 	public Text ScoreText;
+	public GameObject homeButton;
 	public PlayerMovement player;
 	public Points points;
 
@@ -43,6 +44,7 @@ public class RunnerUI : MonoBehaviour {
 			GameOverText.enabled = true;
 			HealthUI.enabled = false;
 			ScoreText.enabled = false;
+			homeButton.SetActive(true);
 		}
 		else
 		{
